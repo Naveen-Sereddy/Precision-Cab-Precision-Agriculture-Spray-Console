@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   AlertTriangle, ArrowDownToLine, ArrowLeft, ArrowRight, Check, ChevronDown,
@@ -213,6 +213,18 @@ function App() {
   const [syncOpen, setSyncOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const docked = true;
+  const stageRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  useLayoutEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const fit = () => {
+      setScale(Math.min(1, window.innerWidth / el.scrollWidth, window.innerHeight / el.scrollHeight));
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
+  }, [device, screen, sheetOpen, syncOpen]);
   useEffect(() => {
     const sync = () => {
       const waiting = queue.filter(item => item.state === 'waiting');
@@ -243,10 +255,12 @@ function App() {
       default: return <CabHome {...props}/>;
     }
   };
-  return <main className={`app ${device} antialiased`} data-device={device}>
-    <div className="prototype-controls" aria-label="Viewport preview"><span className="eyebrow">PREVIEW</span><div className="device-switch"><button className={device === 'console' ? 'active' : ''} onClick={() => setDevice('console')}>Cab console <span className="mono">1440</span></button><button className={device === 'tablet' ? 'active' : ''} onClick={() => setDevice('tablet')}>Tablet <span className="mono">900</span></button><button className={device === 'phone' ? 'active' : ''} onClick={() => setDevice('phone')}>Handheld <span className="mono">430</span></button></div></div>
-    <div className="preview-shell"><aside className="app-nav"><div className="brand"><Sprout size={32}/><span>PRECISION<br/>CAB</span></div><nav>{SCREENS.map(([id, label, Icon]) => <button key={id} title={label} className={screen === id ? 'active' : ''} onClick={() => {setScreen(id); setSheetOpen(false)}}><Icon size={26}/><span>{label}</span></button>)}</nav><div className="nav-footer"><StatusRing state="online"/><span className="mono">RTK</span></div></aside><div className="app-body"><header className="app-header"><div className="header-field"><MapPin size={24}/><strong>Valley Crop Services</strong><ChevronDown size={22}/></div><div className="header-live"><StatusRing state="online" compact/><span className="mono">10:46:32</span><span className="connection"><Radio size={22}/>2.4 GHz</span></div></header>{renderScreen()}{screen !== 'sync' && <SyncQueue queue={queue} syncOpen={syncOpen} setSyncOpen={setSyncOpen} docked={docked}/>}</div></div>
-  </main>;
+  return <div className="fit-stage">
+    <main ref={stageRef} className={`app ${device} antialiased`} data-device={device} style={{ transform: `scale(${scale})` }}>
+      <div className="prototype-controls" aria-label="Viewport preview"><span className="eyebrow">PREVIEW</span><div className="device-switch"><button className={device === 'console' ? 'active' : ''} onClick={() => setDevice('console')}>Cab console <span className="mono">1440</span></button><button className={device === 'tablet' ? 'active' : ''} onClick={() => setDevice('tablet')}>Tablet <span className="mono">900</span></button><button className={device === 'phone' ? 'active' : ''} onClick={() => setDevice('phone')}>Handheld <span className="mono">430</span></button></div></div>
+      <div className="preview-shell"><aside className="app-nav"><div className="brand"><Sprout size={32}/><span>PRECISION<br/>CAB</span></div><nav>{SCREENS.map(([id, label, Icon]) => <button key={id} title={label} className={screen === id ? 'active' : ''} onClick={() => {setScreen(id); setSheetOpen(false)}}><Icon size={26}/><span>{label}</span></button>)}</nav><div className="nav-footer"><StatusRing state="online"/><span className="mono">RTK</span></div></aside><div className="app-body"><header className="app-header"><div className="header-field"><MapPin size={24}/><strong>Valley Crop Services</strong><ChevronDown size={22}/></div><div className="header-live"><StatusRing state="online" compact/><span className="mono">10:46:32</span><span className="connection"><Radio size={22}/>2.4 GHz</span></div></header>{renderScreen()}{screen !== 'sync' && <SyncQueue queue={queue} syncOpen={syncOpen} setSyncOpen={setSyncOpen} docked={docked}/>}</div></div>
+    </main>
+  </div>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
