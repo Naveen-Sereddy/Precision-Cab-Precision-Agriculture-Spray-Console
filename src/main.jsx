@@ -45,7 +45,7 @@ function Metric({ label, value, unit, accent = false }) {
   </div>;
 }
 
-function FieldMap({ mode = 'live', selected = 'north', guidance = false, overlay = false }) {
+function FieldMap({ mode = 'live', selected = 'north', guidance = false, overlay = false, compass = true }) {
   const isNDVI = mode === 'ndvi';
   return <div className={`field-map ${guidance ? 'guidance-map' : ''} ${overlay ? 'summary-map' : ''}`} aria-label="Field map">
     <svg viewBox="0 0 820 470" preserveAspectRatio="none" role="img" aria-label="North 80 field boundary and equipment position">
@@ -75,7 +75,7 @@ function FieldMap({ mode = 'live', selected = 'north', guidance = false, overlay
         <path d="M610 62 L636 62 L670 181 L643 183 Z" className="skip-strip" />
       </>}
     </svg>
-    <div className="map-compass">N<span>↑</span></div>
+    {compass && <div className="map-compass">N<span>↑</span></div>}
     {mode !== 'live' && <div className="map-key"><span className="map-swatch"></span>{isNDVI ? 'NDVI vigor' : 'Satellite'}</div>}
     {overlay && <div className="coverage-key"><span className="solid-swatch"></span>Applied <span className="stripe-swatch"></span>Overlap <span className="dash-swatch"></span>Skip</div>}
   </div>;
@@ -141,7 +141,7 @@ function ActivePass({ rate, boomStopped, setBoomStopped }) {
   return <section className="screen active-screen">
     <div className="active-top"><button className="back-action"><ArrowLeft size={28}/>North 80</button><div className="pass-title"><span className="eyebrow">PASS 18 OF 24</span><h1 className="mono">+0.0 IN</h1></div><div className="active-rate"><span>TARGET</span><strong className="mono">{rate.toFixed(1)} <em>GAL/AC</em></strong></div></div>
     <div className="active-map-wrap">
-      <FieldMap guidance />
+      <FieldMap guidance compass={false} />
       <div className="guidance-overlay"><div><span>LEFT / RIGHT</span><strong className="mono">0.0 IN</strong></div><div><span>HEADING</span><strong className="mono">274°</strong></div></div>
     </div>
     <div className="active-bottom"><BoomDiagram stopped={boomStopped} /><div className="pass-metrics"><Metric label="SPEED" value="11.8" unit="MPH"/><Metric label="APPLIED" value="112.4" unit="AC"/><Metric label="TANK" value="810" unit="GAL"/></div><button className="outline-action" onClick={() => setBoomStopped(!boomStopped)}>{boomStopped ? <Play size={26}/> : <Pause size={26}/>} {boomStopped ? 'Resume boom' : 'Pause boom'}</button></div>
