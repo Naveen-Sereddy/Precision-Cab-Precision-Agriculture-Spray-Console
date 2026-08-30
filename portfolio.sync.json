@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "project": "Precision Cab",
+  "portfolio": {
+    "slug": "case-precisioncab",
+    "liveUrl": "https://precision-cab.vercel.app"
+  },
+  "sync": {
+    "copyRules": [],
+    "captureBuild": "npm run build",
+    "captureRules": [
+      { "root": "dist", "source": "index.html", "query": "captureScreen=active&captureDevice=console", "target": "src/assets/case/precisioncab/hero-active-pass.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=alert&captureDevice=console", "target": "src/assets/case/precisioncab/hero-boom-fault.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=home&captureDevice=console", "target": "src/assets/case/precisioncab/hero-cab-home.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=field&captureDevice=console", "target": "src/assets/case/precisioncab/hero-field-select.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=home&captureDevice=phone", "target": "src/assets/case/precisioncab/hero-mobile.png", "viewport": { "width": 430, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=summary&captureDevice=console", "target": "src/assets/case/precisioncab/hero-pass-summary.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=rate&captureDevice=console", "target": "src/assets/case/precisioncab/hero-rate-change.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=scout&captureDevice=console", "target": "src/assets/case/precisioncab/hero-scouting.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=settings&captureDevice=console", "target": "src/assets/case/precisioncab/hero-settings.png", "viewport": { "width": 1440, "height": 900 } },
+      { "root": "dist", "source": "index.html", "query": "captureScreen=sync&captureDevice=console", "target": "src/assets/case/precisioncab/hero-sync-queue.png", "viewport": { "width": 1440, "height": 900 } }
+    ]
+  }
+}

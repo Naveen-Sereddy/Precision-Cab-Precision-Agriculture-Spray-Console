@@ -7,6 +7,7 @@ import {
   Radio, RotateCcw, Satellite, ScanLine, Settings2, Square, Sun,
   Upload, Volume2, WifiOff, X
 } from 'lucide-react';
+import { captureStateFromSearch } from './capture-state.mjs';
 import './styles.css';
 
 const SCREENS = [
@@ -205,8 +206,9 @@ function Settings() {
 }
 
 function App() {
-  const [screen, setScreen] = useState('home');
-  const [device, setDevice] = useState('console');
+  const captureState = captureStateFromSearch(window.location.search);
+  const [screen, setScreen] = useState(captureState.screen);
+  const [device, setDevice] = useState(captureState.device);
   const [rate, setRate] = useState(17.5);
   const [boomStopped, setBoomStopped] = useState(false);
   const [queue, setQueue] = useState(queueSeed);
