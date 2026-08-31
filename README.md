@@ -59,7 +59,7 @@ Open the printed local URL. `npm run build` produces a production build in `dist
 
 - Real GPS/telemetry integration in place of the fixed mock coordinates and rates
 - Persistent storage for the sync queue instead of an in-memory simulation
-- Deep-linkable screen state (currently reset on reload)
+- General-purpose routes and persistent screen state. The Portfolio refresh workflow can already open a stable capture state with `?captureScreen=<screen>&captureDevice=<console|tablet|phone>`.
 
 ## License
 
