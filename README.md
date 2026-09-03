@@ -2,7 +2,7 @@
 
 **Every pass, precisely applied.**
 
-An in-cab console prototype for GPS-guided precision spray application. 11 screens covering the full operator flow (field selection, live guided application, rate changes, boom fault handling, pass summaries, scouting, offline sync, and settings), built as a single interactive React app with a real industrial-console visual language, not a mockup.
+An in-cab console prototype for GPS-guided precision spray application. 11 screens cover the operator flow (field selection, live guided application, rate changes, boom fault handling, pass summaries, scouting, offline sync, and settings), built as a single interactive React app with an industrial-console visual language.
 
 ## Screenshots
 
@@ -24,10 +24,13 @@ An in-cab console prototype for GPS-guided precision spray application. 11 scree
 - Rate-change keypad with live tank-mix math (gallons needed for the new rate, tank reserve remaining)
 - Boom section diagram reflects stopped/fault state consistently across the home, active pass, and alert screens
 - Field map rendered as SVG with satellite/NDVI mode toggle, guidance lines, and applied/overlap/skip coverage overlays
+- Dual ambient modes: a high-contrast Sunlight Glare palette and a low-lumen Dark Cab palette, with distinct active, stopped, and fault boom states in both modes
+- ISOBUS Class 3 section-control and NMEA 0183 GPGGA/GPVTG message shapes are documented in `specs/isobus-telemetry.json`
+- Offline edge behavior, IndexedDB coverage logging, FIFO sync states, and the shared boom safety state are documented in `docs/01-edge-telemetry-architecture.md`
 
 ## Tech stack
 
-React 19, Vite 8, Tailwind CSS 4 (via `@tailwindcss/vite`), `lucide-react` for icons. No backend, no router, no state management library. Screens are plain functions switched by a single `useState`; all data is in-memory mock state.
+React 19, Vite 8, Tailwind CSS 4 (via `@tailwindcss/vite`), `lucide-react` for icons. No backend, router, or state-management library is bundled in this prototype. Screens are plain functions switched by a single `useState`; telemetry is representative UI data.
 
 ## Project structure
 
@@ -35,6 +38,10 @@ React 19, Vite 8, Tailwind CSS 4 (via `@tailwindcss/vite`), `lucide-react` for i
 src/
   main.jsx       # every screen component, app shell, and state
   styles.css     # design tokens, component styles, container-query breakpoints
+specs/
+  isobus-telemetry.json
+docs/
+  01-edge-telemetry-architecture.md
 index.html       # entry point
 vite.config.js   # Vite + React + Tailwind plugin config
 screenshots/     # screenshots used in this README
@@ -50,15 +57,18 @@ Responsive layout runs on CSS container queries scoped to `.preview-shell`, not 
 
 ```bash
 npm install
+npm run check
 npm run dev
 ```
 
 Open the printed local URL. `npm run build` produces a production build in `dist/`.
 
+`npm run check` validates the 11-screen registry, named container breakpoints, 64px touch-target floor, and the ISOBUS/NMEA specification before a build.
+
 ## Future improvements
 
 - Real GPS/telemetry integration in place of the fixed mock coordinates and rates
-- Persistent storage for the sync queue instead of an in-memory simulation
+- IndexedDB persistence for the sync queue instead of the current in-memory simulation
 - General-purpose routes and persistent screen state. The Portfolio refresh workflow can already open a stable capture state with `?captureScreen=<screen>&captureDevice=<console|tablet|phone>`.
 
 ## License

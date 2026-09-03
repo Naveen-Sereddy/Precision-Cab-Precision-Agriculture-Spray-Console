@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Precision Cab ISOBUS and NMEA telemetry contract",
+  "version": "1.0.0",
+  "isobus": {
+    "standard": "ISO 11783",
+    "taskController": {
+      "class": 3,
+      "capabilities": ["section-control", "variable-rate-application", "as-applied-logging"]
+    },
+    "boom": {
+      "sectionCount": 9,
+      "geometry": {
+        "totalWidthMeters": 27,
+        "sectionWidthMeters": 3,
+        "referencePoint": "implement-center"
+      },
+      "sections": [
+        {"id": 1, "side": "left", "nozzleLatencyMs": 42},
+        {"id": 2, "side": "left", "nozzleLatencyMs": 39},
+        {"id": 3, "side": "left", "nozzleLatencyMs": 37},
+        {"id": 4, "side": "left", "nozzleLatencyMs": 35},
+        {"id": 5, "side": "center", "nozzleLatencyMs": 34},
+        {"id": 6, "side": "right", "nozzleLatencyMs": 35},
+        {"id": 7, "side": "right", "nozzleLatencyMs": 37},
+        {"id": 8, "side": "right", "nozzleLatencyMs": 39},
+        {"id": 9, "side": "right", "nozzleLatencyMs": 42}
+      ],
+      "automaticSectionShutoff": {
+        "enabled": true,
+        "rules": [
+          {"id": "covered-area", "when": "coverage-overlap >= 95%", "action": "close-section"},
+          {"id": "boundary", "when": "implement-nozzle-outside-field-boundary", "action": "close-section"},
+          {"id": "position-quality", "when": "gps-fix-quality < 4", "action": "hold-last-safe-state"},
+          {"id": "sensor-fault", "when": "section-flow-sensor-fault", "action": "close-section-and-raise-alert"}
+        ]
+      }
+    }
+  },
+  "nmea0183": {
+    "transport": "serial-0183",
+    "sentences": {
+      "GPGGA": {
+        "format": "$GPGGA,time,latitude,latitudeHemisphere,longitude,longitudeHemisphere,fixQuality,satellitesTracked,hdop,altitude,altitudeUnit",
+        "fields": [
+          {"index": 1, "name": "latitude", "unit": "degrees-minutes"},
+          {"index": 2, "name": "latitudeHemisphere", "values": ["N", "S"]},
+          {"index": 3, "name": "longitude", "unit": "degrees-minutes"},
+          {"index": 4, "name": "longitudeHemisphere", "values": ["E", "W"]},
+          {"index": 5, "name": "fixQuality", "unit": "enum"},
+          {"index": 6, "name": "satellitesTracked", "unit": "count"},
+          {"index": 8, "name": "altitude", "unit": "meters"}
+        ]
+      },
+      "GPVTG": {
+        "format": "$GPVTG,trackDegreesTrue,T,trackDegreesMagnetic,M,groundSpeedKnots,N,groundSpeedMph,K",
+        "fields": [
+          {"index": 1, "name": "trackDegreesTrue", "unit": "degrees"},
+          {"index": 5, "name": "groundSpeedKnots", "unit": "knots"},
+          {"index": 7, "name": "groundSpeedMph", "unit": "mph"}
+        ]
+      }
+    },
+    "checksumRequired": true
+  }
+}
