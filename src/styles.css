@@ -11,7 +11,7 @@ html, body { height:100%; overflow:hidden; }
 body { margin:0; background:var(--frame); color:var(--color-ink); font-family:'IBM Plex Sans',sans-serif; font-size:16px; font-weight:600; }
 button, input { font:inherit; color:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.55; }
 .fit-stage { position:fixed; inset:0; overflow:hidden; background:var(--frame); }
-.app { padding:var(--space-2); transform-origin:top center; }
+.app { padding:var(--space-2); transform-origin:top center; background:var(--frame); color:var(--color-ink); min-height:100vh; }
 .prototype-controls { max-width:1560px; margin:0 auto var(--space-1); display:flex; align-items:center; justify-content:space-between; gap:var(--space-1); }
 .eyebrow { display:block; color:var(--color-secondary); font-size:16px; font-weight:700; letter-spacing:.08em; }
 .device-switch, .segmented { display:flex; border:2px solid var(--color-ink); border-radius:var(--radius-md); overflow:hidden; background:var(--color-bg); }
@@ -23,6 +23,10 @@ button, input { font:inherit; color:inherit; } button { cursor:pointer; } button
 .tablet .preview-shell { max-width:900px; grid-template-columns:1fr; }
 .phone .preview-shell { max-width:430px; min-height:900px; grid-template-columns:1fr; }
 .app-nav { background:var(--color-ink); color:var(--color-bg); padding:var(--space-1); display:flex; flex-direction:column; gap:var(--space-2); }
+[data-theme="night"] .app-nav { background:#120D0B; color:var(--color-ink); border-right:2px solid var(--line); }
+[data-theme="night"] .app-nav nav button { color:var(--color-ink); }
+[data-theme="night"] .app-nav nav button.active { background:#35170C; color:var(--color-ink); }
+[data-theme="night"] .brand svg path { fill:var(--color-ink); }
 .brand { display:flex; align-items:center; gap:12px; line-height:1; letter-spacing:.08em; }
 .app-nav nav { display:grid; gap:8px; }
 .app-nav nav button { min-height:var(--touch-min); border:0; background:transparent; color:var(--color-bg); display:flex; align-items:center; gap:12px; text-align:left; padding:0 var(--space-1); font-size:16px; font-weight:700; }
