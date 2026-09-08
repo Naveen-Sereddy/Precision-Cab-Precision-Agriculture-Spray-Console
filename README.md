@@ -65,6 +65,8 @@ Open the printed local URL. `npm run build` produces a production build in `dist
 
 `npm run check` validates the 11-screen registry, named container breakpoints, 64px touch-target floor, and the ISOBUS/NMEA specification before a build.
 
+`portfolio.sync.json` describes capture outputs written to the separate portfolio site. Those generated images are intentionally not stored in this repository.
+
 ## Future improvements
 
 - Real GPS/telemetry integration in place of the fixed mock coordinates and rates

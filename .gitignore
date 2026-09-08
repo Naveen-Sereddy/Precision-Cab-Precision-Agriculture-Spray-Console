@@ -1,3 +1,19 @@
 node_modules/
 dist/
 .impeccable/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Coverage, logs, and local tooling
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.cache/
+.vscode/
+.idea/
+*.tsbuildinfo
