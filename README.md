@@ -1,8 +1,14 @@
 # Precision Cab
 
+[![Verify site](https://github.com/Naveen-Sereddy/Precision-Cab-Precision-Agriculture-Spray-Console/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/Naveen-Sereddy/Precision-Cab-Precision-Agriculture-Spray-Console/actions/workflows/verify.yml)
+
 **Every pass, precisely applied.**
 
 An in-cab console prototype for GPS-guided precision spray application. 11 screens cover the operator flow (field selection, live guided application, rate changes, boom fault handling, pass summaries, scouting, offline sync, and settings), built as a single interactive React app with an industrial-console visual language.
+
+**Project type:** Technical product prototype.
+
+**Status:** Interactive demonstration using representative telemetry data; it is not a certified vehicle-control system.
 
 ## Screenshots
 
@@ -31,6 +37,12 @@ An in-cab console prototype for GPS-guided precision spray application. 11 scree
 ## Tech stack
 
 React 19, Vite 8, Tailwind CSS 4 (via `@tailwindcss/vite`), `lucide-react` for icons. No backend, router, or state-management library is bundled in this prototype. Screens are plain functions switched by a single `useState`; telemetry is representative UI data.
+
+## Implemented vs proposed
+
+**Implemented in this repository:** The screen registry, device-size preview, representative telemetry UI, SVG field-map states, rate-change math, simulated offline sync transitions, and structural/build verification.
+
+**Proposed or future work:** Real GPS/ECU/ISOBUS/NMEA integration, durable IndexedDB synchronization, production authentication, and certified vehicle-control behavior. The architecture document describes these boundaries; the prototype does not implement them.
 
 ## Project structure
 
@@ -66,6 +78,12 @@ Open the printed local URL. `npm run build` produces a production build in `dist
 `npm run check` validates the 11-screen registry, named container breakpoints, 64px touch-target floor, and the ISOBUS/NMEA specification before a build.
 
 `portfolio.sync.json` describes capture outputs written to the separate portfolio site. Those generated images are intentionally not stored in this repository.
+
+## Documentation
+
+- [Edge and telemetry architecture](docs/01-edge-telemetry-architecture.md)
+- [ISOBUS/NMEA specification](specs/isobus-telemetry.json)
+- [Portfolio synchronization metadata](portfolio.sync.json)
 
 ## Future improvements
 
