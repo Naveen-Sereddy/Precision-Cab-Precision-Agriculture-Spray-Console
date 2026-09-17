@@ -13,11 +13,11 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "@vitejs/plugin-react": "^6.0.3",
-    "vite": "^8.1.4",
+    "lucide-react": "^1.24.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "lucide-react": "^1.24.0",
-    "tailwindcss": "^4.3.2"
-  },
-  "devDependencies": {}
+    "shpjs": "^6.2.0",
+    "tailwindcss": "^4.3.2",
+    "vite": "^8.1.4"
+  }
 }
